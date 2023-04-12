@@ -7,11 +7,22 @@ on:
   # pull_request:
 
 jobs:
-  buildanddeploy:
-    name: "For each"
-    uses: ./.github/workflows/single.yaml
-    with:
-      IMAGE: svelte
-      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
-    secrets:
-      DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
+  build-deploy:
+    name: "Build and deploy"
+    strategy:
+      matrix:
+        image: ["svelte", "aws-serverless"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: "Docker Build and Publish"
+        env:
+          DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+          DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
+          IMAGE: ${{ matrix.image }}
+        run: |
+          echo "Dockerhub user: ${DOCKERHUB_USER}"
+          docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
+          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}
+          docker build -t $TAG -f ./${IMAGE}/Dockerfile .
+          docker push $TAG

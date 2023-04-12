@@ -1,0 +1,17 @@
+name: "Build and publish all devcontainers to Dockerhub"
+
+# triggers
+on:
+  workflow_dispatch:
+  # push:
+  # pull_request:
+
+jobs:
+  buildanddeploy:
+    name: "For each"
+    uses: ./.github/workflows/single.yaml
+    with:
+      IMAGE: svelte
+      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+    secrets:
+      DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
