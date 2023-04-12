@@ -21,8 +21,8 @@ jobs:
         env:
           DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
           DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
-          IMAGE: ${{ matrix.image }}
           VTAG: ${{ matrix.tag }}
+          IMAGE: ${{ matrix.image }}
         run: |
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
