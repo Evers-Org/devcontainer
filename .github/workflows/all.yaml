@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: vtags
         run: |
-          echo "::set-output name=VTAGS::[\"latest\",\"not\"]"
+          echo "VTAGS=[\"latest\",\"not\"]" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
   build-deploy:
     name: "Build and deploy"
     runs-on: ubuntu-latest
