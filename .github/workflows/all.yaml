@@ -14,6 +14,7 @@ jobs:
       - id: vtags
         run: |
           echo "VTAGS=abcdefg" >> "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
     outputs:
       vtags: ${{ steps.vtags.outputs.VTAGS }}
   build-deploy:
@@ -34,7 +35,7 @@ jobs:
           IMAGE: ${{ matrix.image }}
           JSON: ${{ needs.buildmatrix.outputs.vtags }}
         run: |
-          echo $JSON
+          printenv
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
           TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${VTAG}
