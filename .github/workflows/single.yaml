@@ -3,7 +3,7 @@ name: "Build and publish single devcontainers to Dockerhub"
 on:
   workflow_call:
     inputs:
-      image:
+      IMAGE:
         required: true
         type: string
       DOCKERHUB_USER:
@@ -25,9 +25,10 @@ jobs:
         env:
           DOCKERHUB_USER: ${{ inputs.DOCKERHUB_USER }}
           DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
+          IMAGE: ${{ inputs.IMAGE }}
         run: |
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
-          TAG=${DOCKERHUB_USER}/devcontainer_${image}
-          docker build -t $TAG -f ./${image}/Dockerfile .
+          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}
+          docker build -t $TAG -f ./${IMAGE}/Dockerfile .
           docker push $TAG
