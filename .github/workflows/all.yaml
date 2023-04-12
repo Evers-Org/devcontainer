@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         image: ["svelte", "aws-serverless"]
-        tag: ${{ fromJSON(needs.build-matrix.outputs.vtags) }} #[${{ github.sha }}, "latest"]
+        tag: ["latest"] #${{ fromJSON(needs.build-matrix.outputs.vtags) }} #[${{ github.sha }}, "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +33,9 @@ jobs:
           DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
           VTAG: ${{ matrix.tag }}
           IMAGE: ${{ matrix.image }}
+          JSON: ${{ needs.build-matrix.outputs.vtags }}
         run: |
+          echo $JSON
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
           TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${VTAG}
