@@ -14,14 +14,13 @@ jobs:
       - name: vtags
         run: |
           echo "VTAGS=[\"latest\",\"not\"]" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
   build-deploy:
     name: "Build and deploy"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         image: ["svelte", "aws-serverless"]
-        tag: ${{ fromJSON(needs.build-matrix.outputs.VTAGS) }} #[${{ github.sha }}, "latest"]
+        tag: ${{ needs.build-matrix.outputs.VTAGS }} #[${{ github.sha }}, "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
