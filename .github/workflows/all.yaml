@@ -11,10 +11,9 @@ jobs:
     name: "Generate matrix value(s)"
     runs-on: ubuntu-latest
     steps:
-      - name: vtags
-        id: vtags
+      - id: vtags
         run: |
-          echo "VTAGS=abcdefg" >> $GITHUB_OUTPUT
+          echo "VTAGS=abcdefg" >> "$GITHUB_OUTPUT"
     outputs:
       vtags: ${{ steps.vtags.outputs.VTAGS }}
   build-deploy:
