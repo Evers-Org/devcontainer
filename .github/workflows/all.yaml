@@ -7,13 +7,20 @@ on:
   # pull_request:
 
 jobs:
+  build-matrix:
+    name: "Generate matrix value(s)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: vtags
+        run: |
+          echo "::set-output name=VTAGS::[\"latest\",\"not\"]"
   build-deploy:
     name: "Build and deploy"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         image: ["svelte", "aws-serverless"]
-        tag: [${{ github.sha }}, "latest"]
+        tag: ${{ fromJSON(steps.build-matrix.outputs.VTAGS) }} #[${{ github.sha }}, "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
