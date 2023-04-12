@@ -7,7 +7,7 @@ on:
   # pull_request:
 
 jobs:
-  build-matrix:
+  buildmatrix:
     name: "Generate matrix value(s)"
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
           DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
           VTAG: ${{ matrix.tag }}
           IMAGE: ${{ matrix.image }}
-          JSON: ${{ needs.build-matrix.outputs.vtags }}
+          JSON: ${{ needs.buildmatrix.outputs.vtags }}
         run: |
           echo $JSON
           echo "Dockerhub user: ${DOCKERHUB_USER}"
