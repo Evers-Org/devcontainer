@@ -26,6 +26,6 @@ jobs:
         run: |
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
-          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${{VTAG}}
+          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${VTAG}
           docker build -t $TAG -f ./${IMAGE}/Dockerfile .
           docker push $TAG
