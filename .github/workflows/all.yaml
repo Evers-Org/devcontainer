@@ -9,6 +9,7 @@ on:
 jobs:
   build-deploy:
     name: "Build and deploy"
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         image: ["svelte", "aws-serverless"]
