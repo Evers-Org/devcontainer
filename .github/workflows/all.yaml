@@ -12,3 +12,6 @@ jobs:
     uses: ./.github/workflows/single.yaml
     with:
       image: svelte
+      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+    secrets:
+      DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
