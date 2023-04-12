@@ -14,7 +14,7 @@ jobs:
       - name: vtags
         id: vtags
         run: |
-          echo "VTAGS=[]" >> $GITHUB_OUTPUT
+          echo "VTAGS=abcdefg" >> $GITHUB_OUTPUT
     outputs:
       vtags: ${{ steps.vtags.outputs.VTAGS }}
   build-deploy:
