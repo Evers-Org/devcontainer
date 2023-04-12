@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         image: ["svelte", "aws-serverless"]
+        tag: [$GITHUB_SHA, "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -21,9 +22,10 @@ jobs:
           DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
           DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
           IMAGE: ${{ matrix.image }}
+          TAG: ${{ matrix.tag }}
         run: |
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
-          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}
+          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${{TAG}}
           docker build -t $TAG -f ./${IMAGE}/Dockerfile .
           docker push $TAG
