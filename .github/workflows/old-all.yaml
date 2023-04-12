@@ -1,4 +1,4 @@
-name: "Build and publish all devcontainers to Dockerhub"
+name: "archive Build and publish all devcontainers to Dockerhub"
 
 # triggers
 on:
