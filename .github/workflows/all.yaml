@@ -22,10 +22,10 @@ jobs:
           DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
           DOCKERHUB_TKN: ${{ secrets.DOCKERHUB_TKN }}
           IMAGE: ${{ matrix.image }}
-          TAG: ${{ matrix.tag }}
+          VTAG: ${{ matrix.tag }}
         run: |
           echo "Dockerhub user: ${DOCKERHUB_USER}"
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TKN
-          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${{TAG}}
+          TAG=${DOCKERHUB_USER}/devcontainer_${IMAGE}:${{VTAG}}
           docker build -t $TAG -f ./${IMAGE}/Dockerfile .
           docker push $TAG
