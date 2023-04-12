@@ -12,15 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: vtags
+        id: vtags
         run: |
           echo "VTAGS=[\\"latest\\",\\"not\\"]" >> $GITHUB_OUTPUT
+    outputs:
+      vtags: ${{ steps.vtags.outputs.VTAGS }}
   build-deploy:
     name: "Build and deploy"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         image: ["svelte", "aws-serverless"]
-        tag: ${{ fromJSON(needs.build-matrix.outputs.VTAGS) }} #[${{ github.sha }}, "latest"]
+        tag: ${{ fromJSON(needs.build-matrix.outputs.vtags) }} #[${{ github.sha }}, "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
